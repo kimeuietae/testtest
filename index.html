@@ -103,12 +103,12 @@
 
         // Show main button
         Telegram.WebApp.MainButton.setParams({
-            text: '메인 버튼',
-            position: 'right'            
+            text: '메인 버튼'          
         });
         Telegram.WebApp.MainButton.onClick(function () {
             Telegram.WebApp.showAlert('메인 버튼 클릭')
         });	
+        Telegram.WebApp.MainButton.hasShineEffect = 'true';
         Telegram.WebApp.MainButton.show();
 
         // Show secondary Button
