@@ -114,14 +114,14 @@
         function showPopup() {
             Telegram.WebApp.showPopup({
                 title: 'Title',
-                message: 'Some message',
+                message: '(주) 플코 사이트로 이동하시겠습니까?)',
                 buttons: [
-                    {id: 'link', type: 'default', text: 'Open ton.org'},
+                    {id: 'link', type: 'default', text: 'Open FLKO'},
                     {type: 'cancel'},
                 ]
             }, function(btn) {
                 if (btn === 'link') {
-                    Telegram.WebApp.openLink('https://ton.org/');
+                    Telegram.WebApp.openLink('https://www.flko.co.kr/index.php');
                 }
             });
         };
