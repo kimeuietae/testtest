@@ -103,7 +103,8 @@
 
         // Show main button
         Telegram.WebApp.MainButton.setParams({
-            text: '메인 버튼'          
+            text: '메인 버튼',
+            position: 'right'                      
         });
         Telegram.WebApp.MainButton.onClick(function () {
             Telegram.WebApp.showAlert('메인 버튼 클릭')
@@ -113,8 +114,7 @@
         // Show secondary Button
         Telegram.WebApp.SecondaryButton.setParams({
             text: '보조 버튼',
-            color: '#6666CC',
-            position: 'right'
+            color: '#6666CC'
         });
         Telegram.WebApp.SecondaryButton.onClick(function () {
             Telegram.WebApp.showAlert('보조 버튼 클릭')
