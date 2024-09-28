@@ -114,7 +114,7 @@
         function showPopup() {
             Telegram.WebApp.showPopup({
                 title: 'Title',
-                message: '(주) 플코 이동하시겠습니까?)',
+                message: '(주) 플코 이동하시겠습니까?',
                 buttons: [
                     {id: 'link', type: 'default', text: 'Open FLKO'},
                     {type: 'cancel'},
@@ -146,8 +146,8 @@
 
         Telegram.WebApp.setHeaderColor('secondary_bg_color');
 
-        setViewportData();
-        Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+        //setViewportData();
+        //Telegram.WebApp.onEvent('viewportChanged', setViewportData);
 
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
