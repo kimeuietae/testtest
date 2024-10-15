@@ -70,7 +70,7 @@
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('테스트 버튼을 클릭!!!');">테스트 버튼</button>
         <button onclick="showPopup();">팝업 버튼</button>
-        <button onclick="sendMessage();">전송 버튼</button>
+        <button onclick="sendCommand();">명령어 버튼</button>
 
         <h1>Links</h1>
         <ul>
@@ -143,33 +143,12 @@
             });
         };
 
-        function sendMessage() {
-            // 사용자 정보 가져오기 (선택 사항)
+        function sendCommand() {
             const user = tg.initDataUnsafe.user;
+            const customCommand = '/start'; // 여기에 사용자 정의 명령어 입력
 
-            // 봇으로 전송할 데이터
-            const message = `User ${user.first_name} ${user.last_name} clicked the button.`;
-
-            // 사용자 동작을 봇으로 전송하는 POST 요청
-            fetch(`https://api.telegram.org/bot7627344826:AAEbMyopWIhszFiI635t2KNkXsGEG2z4TkE/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: user.id, // 사용자의 텔레그램 ID
-                    text: message,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Message sent to bot:', data);
-                tg.showAlert('Message sent to the bot!');
-            })
-            .catch(error => {
-                console.error('Error sending message:', error);
-                tg.showAlert('Failed to send message.');
-            });
+            // 사용자 정의 명령어를 봇으로 전송
+            sendCommandToBot(user.id, customCommand);
         };
 
         // Function to toggle main TWA button
@@ -197,7 +176,30 @@
 
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-        });    
+        });
+        
+        // 명령어를 봇으로 전송하는 함수
+        function sendCommandToBot(userId, command) {
+            fetch(`https://api.telegram.org/bot7627344826:AAEbMyopWIhszFiI635t2KNkXsGEG2z4TkE/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: userId, // 사용자의 Telegram ID
+                    text: command,   // 보낼 명령어
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Command sent to bot:', data);
+                tg.showAlert('Command sent to the bot!');
+            })
+            .catch(error => {
+                console.error('Error sending command:', error);
+                tg.showAlert('Failed to send command.');
+            });
+        }        
     </script>
 
     <!-- Eruda is console for mobile browsers -->
