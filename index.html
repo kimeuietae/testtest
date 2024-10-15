@@ -70,6 +70,7 @@
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('테스트 버튼을 클릭!!!');">테스트 버튼</button>
         <button onclick="showPopup();">팝업 버튼</button>
+        <button onclick="sendMessage();">전송 버튼</button>
 
         <h1>Links</h1>
         <ul>
@@ -121,6 +122,28 @@
         });
 
         Telegram.WebApp.SecondaryButton.onClick(function () {
+            Telegram.WebApp.sendData('보조 버튼을 클릭하셨습니다');
+        });	
+        Telegram.WebApp.SecondaryButton.show();        
+        Telegram.WebApp.MainButton.show();
+
+        // Function to call showPopup API
+        function showPopup() {
+            Telegram.WebApp.showPopup({
+                title: 'Title',
+                message: '(주) 플코 이동하시겠습니까?',
+                buttons: [
+                    {id: 'link', type: 'default', text: 'Open FLKO'},
+                    {type: 'cancel'},
+                ]
+            }, function(btn) {
+                if (btn === 'link') {
+                    Telegram.WebApp.openLink('https://www.flko.co.kr/index.php');
+                }
+            });
+        };
+
+        function sendMessage() {
             // 사용자 정보 가져오기 (선택 사항)
             const user = tg.initDataUnsafe.user;
 
@@ -146,25 +169,6 @@
             .catch(error => {
                 console.error('Error sending message:', error);
                 tg.showAlert('Failed to send message.');
-            });
-        });	
-
-        Telegram.WebApp.SecondaryButton.show();        
-        Telegram.WebApp.MainButton.show();
-
-        // Function to call showPopup API
-        function showPopup() {
-            Telegram.WebApp.showPopup({
-                title: 'Title',
-                message: '(주) 플코 이동하시겠습니까?',
-                buttons: [
-                    {id: 'link', type: 'default', text: 'Open FLKO'},
-                    {type: 'cancel'},
-                ]
-            }, function(btn) {
-                if (btn === 'link') {
-                    Telegram.WebApp.openLink('https://www.flko.co.kr/index.php');
-                }
             });
         };
 
@@ -193,7 +197,7 @@
 
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-        });
+        });    
     </script>
 
     <!-- Eruda is console for mobile browsers -->
