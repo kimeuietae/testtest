@@ -180,19 +180,22 @@
         
         // 명령어를 봇으로 전송하는 함수
         function sendCommandToBot(userId, command) {
-            fetch(`https://api.telegram.org/bot7627344826:AAEbMyopWIhszFiI635t2KNkXsGEG2z4TkE/sendMessage`, {
+            const command = '/start'; // 보낼 명령어
+
+            // 서버로 명령어 전송
+            fetch('http://127.0.0.1:3000/send-command', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    chat_id: userId, // 사용자의 Telegram ID
-                    text: command,   // 보낼 명령어
+                    command: command,
+                    userId: tg.initDataUnsafe.user.id, // 사용자의 ID
                 }),
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Command sent to bot:', data);
+                console.log('Command sent to server:', data);
                 tg.showAlert('Command sent to the bot!');
             })
             .catch(error => {
