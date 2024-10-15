@@ -144,28 +144,11 @@
         };
 
         function sendCommand() {
-            const command = '/start'; // 보낼 명령어
+            const user = tg.initDataUnsafe.user;
+            const customCommand = '/start'; // 여기에 사용자 정의 명령어 입력
 
-            // 서버로 명령어 전송
-            fetch('http://127.0.0.1:3000/send-command', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    command: command,
-                    userId: tg.initDataUnsafe.user.id, // 사용자의 ID
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Command sent to server:', data);
-                tg.showAlert('Command sent to the bot!');
-            })
-            .catch(error => {
-                console.error('Error sending command:', error);
-                tg.showAlert('Failed to send command.');
-            });
+            // 사용자 정의 명령어를 봇으로 전송
+            sendCommandToBot(user.id, customCommand);
         };
 
         // Function to toggle main TWA button
@@ -193,7 +176,30 @@
 
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-        });     
+        });
+        
+        // 명령어를 봇으로 전송하는 함수
+        function sendCommandToBot(userId, command) {
+            fetch(`http://127.0.0.1:3000/send-command`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: userId, // 사용자의 Telegram ID
+                    text: command,   // 보낼 명령어
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Command sent to bot:', data);
+                tg.showAlert('Command sent to the bot!');
+            })
+            .catch(error => {
+                console.error('Error sending command:', error);
+                tg.showAlert('Failed to send command.');
+            });
+        }        
     </script>
 
     <!-- Eruda is console for mobile browsers -->
