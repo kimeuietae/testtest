@@ -116,9 +116,36 @@
             color: '#6666CC',
             position: 'right'              
         });
+        
         Telegram.WebApp.SecondaryButton.onClick(function () {
-            Telegram.WebApp.sendData('보조 버튼을 클릭하셨습니다');
+            // 사용자 정보 가져오기 (선택 사항)
+            const user = tg.initDataUnsafe.user;
+
+            // 봇으로 전송할 데이터
+            const message = `User ${user.first_name} ${user.last_name} clicked the button.`;
+
+            // 사용자 동작을 봇으로 전송하는 POST 요청
+            fetch(`https://api.telegram.org/bot7627344826:AAEbMyopWIhszFiI635t2KNkXsGEG2z4TkE/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: user.id, // 사용자의 텔레그램 ID
+                    text: message,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message sent to bot:', data);
+                tg.showAlert('Message sent to the bot!');
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                tg.showAlert('Failed to send message.');
+            });
         });	
+
         Telegram.WebApp.SecondaryButton.show();        
         Telegram.WebApp.MainButton.show();
 
@@ -164,7 +191,6 @@
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
         });
-
     </script>
 
     <!-- Eruda is console for mobile browsers -->
