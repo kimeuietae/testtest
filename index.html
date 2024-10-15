@@ -147,14 +147,20 @@
             const user = tg.initDataUnsafe.user;
             const customCommand = '/start'; // 여기에 사용자 정의 명령어 입력
 
+            // 사용자 정의 명령어를 봇으로 전송
+            sendCommandToBot(user.id, customCommand);
+        };
+
+        // 명령어를 봇으로 전송하는 함수
+        function sendCommandToBot(userId, command) {
             fetch(`http://localhost:3000/send-command`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    chat_id: tg.initDataUnsafe.user.id, // 사용자의 Telegram ID
-                    text: customCommand,   // 보낼 명령어
+                    chat_id: userId, // 사용자의 Telegram ID
+                    text: command,   // 보낼 명령어
                 }),
             })
             .then(response => response.json())
@@ -166,7 +172,7 @@
                 console.error('Error sending command:', error);
                 tg.showAlert('Failed to send command.');
             });
-        };
+        };          
 
         // Function to toggle main TWA button
         function toggleMainButton() {
