@@ -70,7 +70,7 @@
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('테스트 버튼을 클릭!!!');">테스트 버튼</button>
         <button onclick="showPopup();">팝업 버튼</button>
-        <button onclick="sendCommand();">명령어 버튼</button>
+        <button onclick="sendCommand();">미션 성공</button>
 
         <h1>Links</h1>
         <ul>
@@ -145,7 +145,7 @@
 
         function sendCommand() {
             const user = tg.initDataUnsafe.user;
-            const customCommand = '/start'; // 여기에 사용자 정의 명령어 입력
+            const customCommand = '/mission_complete'; // 여기에 사용자 정의 명령어 입력
 
             // 사용자 정의 명령어를 봇으로 전송
             sendCommandToBot(user.id, customCommand);
