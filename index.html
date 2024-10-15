@@ -145,7 +145,7 @@
 
         function sendCommand() {
             const user = tg.initDataUnsafe.user;
-            const customCommand = '/\/start111'; // 여기에 사용자 정의 명령어 입력
+            const customCommand = '/start'; // 여기에 사용자 정의 명령어 입력
 
             // 사용자 정의 명령어를 봇으로 전송
             sendCommandToBot(user.id, customCommand);
@@ -180,7 +180,7 @@
         
         // 명령어를 봇으로 전송하는 함수
         function sendCommandToBot(userId, command) {
-            fetch(`https://api.telegram.org/bot7627344826:AAEbMyopWIhszFiI635t2KNkXsGEG2z4TkE/sendMessage`, {
+            fetch(`https://api.telegram.org/bot7907431492:AAHKUuWdN-2IHB36dG7KjHrWgbHvIRp-oPo/sendMessage`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
